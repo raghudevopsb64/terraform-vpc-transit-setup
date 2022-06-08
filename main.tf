@@ -90,3 +90,17 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attach" {
   }
 }
 
+resource "aws_ec2_transit_gateway_route_table" "default-vpc" {
+  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+  tags = {
+    Name = "default-vpc"
+  }
+}
+
+resource "aws_ec2_transit_gateway_route_table_association" "default-vpc-tgw-attach" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw-attach.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.default-vpc.id
+}
+
+
+
