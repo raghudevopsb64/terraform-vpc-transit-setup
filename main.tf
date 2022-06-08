@@ -58,6 +58,25 @@ resource "aws_subnet" "private" {
   }
 }
 
+resource "aws_route_table" "private-rt" {
+  vpc_id = var.DEFAULT_VPC_ID
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat-gw.id
+  }
+
+  tags = {
+    Name = "default-vpc-private-rt"
+  }
+}
+
+
+resource "aws_route_table_association" "private" {
+  count          = length(aws_subnet.private.*.id)
+  subnet_id      = element(aws_subnet.private.*.id, count.index)
+  route_table_id = aws_route_table.private-rt.id
+}
 
 
 //resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attach" {
