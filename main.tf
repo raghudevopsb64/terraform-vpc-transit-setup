@@ -102,5 +102,9 @@ resource "aws_ec2_transit_gateway_route_table_association" "default-vpc-tgw-atta
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.default-vpc.id
 }
 
-
+resource "aws_ec2_transit_gateway_route" "route-to-app-vpc" {
+  destination_cidr_block         = "10.10.5.0/24"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw-attach.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.default-vpc.id
+}
 
