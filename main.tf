@@ -40,6 +40,19 @@ resource "aws_nat_gateway" "nat-gw" {
   }
 }
 
+variable "subnets" {
+  default = ["172.31.96.0/20", "172.31.112.0/20", "172.31.128.0/20", "172.31.144.0/20", "172.31.160.0/20", "172.31.176.0/20"]
+}
+
+resource "aws_subnet" "private" {
+  count      = length(var.subnets)
+  vpc_id     = var.DEFAULT_VPC_ID
+  cidr_block = element(var.subnets, count.index)
+  tags = {
+    Name = "default-vpc-private-${count.index + 1}"
+  }
+}
+
 
 
 //resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attach" {
