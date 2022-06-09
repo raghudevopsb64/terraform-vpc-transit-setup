@@ -24,5 +24,5 @@
 
 
 output "SUBNETS" {
-  value = data.aws_subnet_ids.default-vpc
+  value = tolist(data.aws_subnet_ids.default-vpc.ids)[0]
 }
