@@ -82,4 +82,9 @@ resource "aws_ec2_transit_gateway_route_table_association" "default-vpc-tgw-atta
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.default-vpc.id
 }
 
-
+resource "aws_ec2_transit_gateway_route_table" "all-app-vpc" {
+  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+  tags = {
+    Name = "all-app-vpc"
+  }
+}
